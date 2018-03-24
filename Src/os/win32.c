@@ -40,7 +40,7 @@ int os_GetFolderFiles(char *folder_path, char *hierarchy)
     return(1);
   strcpy(buffer_folder_path,folder_path);
   if(buffer_folder_path[strlen(buffer_folder_path)-1] != '\\' && buffer_folder_path[strlen(buffer_folder_path)-1] != '/')
-    strcat(buffer_folder_path,FOLDER_CHARACTER);
+    strcat(buffer_folder_path,FOLDER_SEPARATOR_STRING);
   strcat(buffer_folder_path,"*.*");
 
   /** On boucle sur tous les fichiers présents **/
@@ -62,7 +62,7 @@ int os_GetFolderFiles(char *folder_path, char *hierarchy)
       first_time++;
       strcpy(buffer_file_path,folder_path);
       if(buffer_file_path[strlen(buffer_file_path)-1] != '\\' && buffer_file_path[strlen(buffer_file_path)-1] != '/')
-        strcat(buffer_file_path,FOLDER_CHARACTER);
+        strcat(buffer_file_path,FOLDER_SEPARATOR_STRING);
       strcat(buffer_file_path,c_file.name);
 
       /** Traite le dossier de façon récursive **/

@@ -1079,6 +1079,10 @@ static int GetFileDataResourceSize(struct prodos_image *current_image, struct fi
                   return(1);
                 }
             }
+          else {
+            /** Invalid storage type **/
+            return(1);
+          }
 
           /* On compte tous les blocs à 0 = Sparse */
           for(i=0; i<nb_block; i++)
@@ -1163,6 +1167,10 @@ static int GetFileDataResourceSize(struct prodos_image *current_image, struct fi
                   return(1);
                 }
             }
+          else {
+            /** Invalid storage type **/
+            return(1);
+          }
           file_entry->index_block += index_block;
 
           /* Comptabilise les blocs à 0 = Sparse */

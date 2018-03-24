@@ -168,7 +168,7 @@ int IndentFile(char *file_path)
   free(data);
 
   /** Création du buffer des lignes indentées **/
-  data = BuildIndentBuffer(nb_line,tab_line);
+  data = (unsigned char *) BuildIndentBuffer(nb_line, tab_line);
 
   /* Libération mémoire */
   for(i=0; i<nb_line; i++)
@@ -180,7 +180,7 @@ int IndentFile(char *file_path)
     return(3);
 
   /** Ecriture du fichier **/
-  length_dst = strlen(data);
+  length_dst = strlen((char *) data);
   result = CreateTextFile(file_path,data,length_dst);
   if(result)
     {
@@ -226,7 +226,7 @@ int OutdentFile(char *file_path)
   free(data);
 
   /** Création du buffer des lignes dé-indentées **/
-  data = BuildOutdentBuffer(nb_line,tab_line);
+  data = (unsigned char *) BuildOutdentBuffer(nb_line, tab_line);
 
   /* Libération mémoire */
   for(i=0; i<nb_line; i++)
@@ -238,7 +238,7 @@ int OutdentFile(char *file_path)
     return(3);
 
   /** Ecriture du fichier **/
-  result = CreateTextFile(file_path,data,strlen(data));
+  result = CreateTextFile(file_path,data, strlen((char *) data));
   if(result)
     {
       printf("  Error : Impossible to update file '%s'.\n",file_path);
@@ -302,7 +302,7 @@ static char *BuildIndentBuffer(int nb_line, struct line **tab_line)
     line_length = (label_length + opcode_length + operand_data_length + comment_length);
 
   /* Allocation mémoire du fichier */
-  data = (char *) calloc(nb_line,line_length+1);
+  data = (unsigned char *) calloc(nb_line,line_length+1);
   if(data == NULL)
     {
       printf("  Error : Impossible to allocate memory to process the file.\n");
@@ -402,7 +402,7 @@ static char *BuildIndentBuffer(int nb_line, struct line **tab_line)
   data[offset] = '\0';
 
   /* Renvoi le buffer */
-  return(data);
+  return((char *) data);
 }
 
 
@@ -430,7 +430,7 @@ static char *BuildOutdentBuffer(int nb_line, struct line **tab_line)
     }
 
   /* Allocation mémoire du fichier */
-  data = (char *) calloc(nb_line,line_length+1);
+  data = (unsigned char *) calloc(nb_line,line_length+1);
   if(data == NULL)
     {
       printf("  Error : Impossible to allocate memory to process the file.\n");
@@ -492,7 +492,7 @@ static char *BuildOutdentBuffer(int nb_line, struct line **tab_line)
   data[offset] = '\0';
 
   /* Renvoi le buffer */
-  return(data);
+  return((char *) data);
 }
 
 
@@ -522,7 +522,7 @@ static struct line **BuildLineTab(unsigned char *data, int length, int *nb_line_
 
   /*** Décodage des lignes ***/
   nb_line = 0;
-  begin = data;
+  begin = (char *) data;
   while(begin)
     {
       /* Fin de ligne */

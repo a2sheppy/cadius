@@ -41,7 +41,7 @@ int os_CreateDirectory(char *directory)
 	char *dir_tokenize = strdup(directory);
 
 	char *buffer = calloc(1, 1024);
-	char *token = strtok(dir_tokenize, FOLDER_CHARACTER);
+	char *token = strtok(dir_tokenize, FOLDER_SEPARATOR_STRING);
 
 	while (token) {
 		if (strlen(buffer) + strlen(token) > 1024) return(-1);
@@ -52,8 +52,8 @@ int os_CreateDirectory(char *directory)
 		else if (!S_ISDIR(dirstat.st_mode))
 			error = my_mkdir(buffer);
 
-		strcat(buffer, FOLDER_CHARACTER);
-		token = strtok(NULL, FOLDER_CHARACTER);
+		strcat(buffer, FOLDER_SEPARATOR_STRING);
+		token = strtok(NULL, FOLDER_SEPARATOR_STRING);
 	}
 
 	return error;

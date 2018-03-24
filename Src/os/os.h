@@ -28,10 +28,12 @@
 
 #ifdef BUILD_POSIX
 
-#define FOLDER_CHARACTER "/"
+#define FOLDER_SEPARATOR_STRING "/"
+#define FOLDER_SEPARATOR_CHAR '/'
 
 #include <dirent.h>
 #include <utime.h>
+#include <unistd.h>
 
 #endif
 
@@ -39,7 +41,8 @@
 
 #pragma warning(disable:4996)
 
-#define FOLDER_CHARACTER "\\"
+#define FOLDER_SEPARATOR_STRING "\\"
+#define FOLDER_SEPARATOR_CHAR '\\'
 
 #include <malloc.h>
 #include <io.h>

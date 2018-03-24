@@ -16,6 +16,7 @@
 
 #include "Dc_Shared.h"
 #include "Dc_Prodos.h"
+#include "os/os.h"
 
 const unsigned int AS_MAGIC;
 #define IS_LITTLE_ENDIAN 'APPL' == (uint32_t) 0x4150504C

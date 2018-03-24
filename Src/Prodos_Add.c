@@ -225,7 +225,7 @@ void AddFolder(struct prodos_image *current_image, char *folder_path, char *targ
   strcpy(full_folder_path,folder_path);
   if(strlen(full_folder_path) > 0)
     if(full_folder_path[strlen(full_folder_path)-1] != '\\' && full_folder_path[strlen(full_folder_path)-1] != '/')
-      strcat(full_folder_path,FOLDER_CHARACTER);
+      strcat(full_folder_path,FOLDER_SEPARATOR_STRING);
   strcat(full_folder_path,"*");
 
   /** Récupère la liste des fichiers du répertoire **/
@@ -310,7 +310,7 @@ static struct prodos_file *LoadFile(char *file_path_data)
   // Start from end of string until we arrive to path delimiter
   strcpy(folder_path,file_path_data);
   for(i=strlen(folder_path); i>=0; i--)
-    if(!strncmp(&folder_path[i], &FOLDER_CHARACTER, strlen(FOLDER_CHARACTER)))
+    if(!strncmp(&folder_path[i], &FOLDER_SEPARATOR_STRING, strlen(FOLDER_SEPARATOR_STRING)))
       {
         folder_path[i+1] = '\0';
         break;
@@ -319,7 +319,7 @@ static struct prodos_file *LoadFile(char *file_path_data)
   // Similarly, also extract the filename
   strcpy(file_name,file_path_data);
   for(i=strlen(file_path_data); i>=0; i--)
-    if(!strncmp(&folder_path[i], &FOLDER_CHARACTER, strlen(FOLDER_CHARACTER)))
+    if(!strncmp(&folder_path[i], &FOLDER_SEPARATOR_STRING, strlen(FOLDER_SEPARATOR_STRING)))
       {
         strcpy(file_name,&file_path_data[i+1]);
         break;
@@ -703,6 +703,11 @@ static WORD CreateFileContent(struct prodos_image *current_image, struct prodos_
           if(file_block_number == 0)
             return(0);
         }
+      else {
+        /** Invalid type **/
+        /** Should report an error? **/
+        return(0);
+      }
     }
   else  /** Fichier Resource **/
     {
@@ -732,6 +737,11 @@ static WORD CreateFileContent(struct prodos_image *current_image, struct prodos_
           if(data_block_number == 0)
             return(0);
         }
+      else {
+        /** Invalid type **/
+        /** Should report an error? **/
+        return(0);
+      }
 
       /** Resource **/
       if(current_file->type_resource == TYPE_ENTRY_SEEDLING)
@@ -752,6 +762,11 @@ static WORD CreateFileContent(struct prodos_image *current_image, struct prodos_
           if(resource_block_number == 0)
             return(0);
         }
+      else {
+        /** Invalid type **/
+        /** Should report an error? **/
+        return(0);
+      }
 
       /** Remplissage de l'Extended block **/
       memset(extended_block,0,BLOCK_SIZE);

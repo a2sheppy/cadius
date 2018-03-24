@@ -92,9 +92,9 @@ void ExtractFolderFiles(struct prodos_image *current_image, struct file_descript
   strcpy(windows_folder_path,output_directory_path);
   if(strlen(windows_folder_path) > 0)
     if(windows_folder_path[strlen(windows_folder_path)-1] != '\\' && windows_folder_path[strlen(windows_folder_path)-1] != '/')
-      strcat(windows_folder_path,FOLDER_CHARACTER);
+      strcat(windows_folder_path,FOLDER_SEPARATOR_STRING);
   strcat(windows_folder_path,folder_entry->file_name_case);
-  strcat(windows_folder_path,FOLDER_CHARACTER);
+  strcat(windows_folder_path,FOLDER_SEPARATOR_STRING);
 
   /* Création du dossier */
   error = os_CreateDirectory(windows_folder_path);
@@ -191,9 +191,9 @@ void ExtractVolumeFiles(struct prodos_image *current_image, char *output_directo
   strcpy(windows_folder_path,output_directory_path);
   if(strlen(windows_folder_path) > 0)
     if(windows_folder_path[strlen(windows_folder_path)-1] != '\\' && windows_folder_path[strlen(windows_folder_path)-1] != '/')
-      strcat(windows_folder_path,FOLDER_CHARACTER);
+      strcat(windows_folder_path,FOLDER_SEPARATOR_STRING);
   strcat(windows_folder_path,current_image->volume_header->volume_name_case);
-  strcat(windows_folder_path,FOLDER_CHARACTER);
+  strcat(windows_folder_path,FOLDER_SEPARATOR_STRING);
 
   /* Création du dossier */
   error = os_CreateDirectory(windows_folder_path);
@@ -291,8 +291,8 @@ static int CreateOutputFile(struct prodos_file *current_file, char *output_direc
     }
   strcpy(directory_path,output_directory_path);
 
-  if(strlen(directory_path) > 0 && directory_path[strlen(directory_path)-1] != FOLDER_CHARACTER)
-    strcat(directory_path,FOLDER_CHARACTER);
+  if(strlen(directory_path) > 0 && directory_path[strlen(directory_path)-1] != FOLDER_SEPARATOR_CHAR)
+    strcat(directory_path,FOLDER_SEPARATOR_STRING);
 
   // Data file path
   strcpy(file_data_path,directory_path);
@@ -318,7 +318,7 @@ static int CreateOutputFile(struct prodos_file *current_file, char *output_direc
   if (output_apple_single)
   {
     struct as_from_prodos as_file = ASFromProdosFile(current_file);
-    error = CreateBinaryFile(file_data_path, as_file.data, as_file.length);
+    error = CreateBinaryFile(file_data_path, (unsigned char *) as_file.data, as_file.length);
   }
   else
     error = CreateBinaryFile(file_data_path,current_file->data,current_file->data_length);

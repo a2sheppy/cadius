@@ -83,7 +83,7 @@ int os_GetFolderFiles(char *folder_path, char *hierarchy)
     // If there's no trailing dir slash, we append it, and a glob
     // (but no longer check for the Win-style terminator)
     char last_char = heap_path[strlen(heap_path) - 1];
-    if (last_char != '/') strcat(heap_path, FOLDER_CHARACTER);
+    if (last_char != '/') strcat(heap_path, FOLDER_SEPARATOR_STRING);
 
     // Most POSIX filename limits are 255 bytes.
     char *heap_path_filename = calloc(1, strlen(folder_path) + 256);
